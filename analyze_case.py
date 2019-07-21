@@ -58,7 +58,9 @@ def compute_stored_runs(directory:str, m: int, output:str):
         rows.append(new_row)
 
     outcome = pd.DataFrame(rows, columns=['IV', 'FV', 'MaxV', 'MinV', 'K', 'N', 'REV'])
-    outcome.to_csv(directory + '/' + output + '.csv', header=None)
+
+    if output is not None:
+        outcome.to_csv(directory + '/' + output + '.csv', header=None)
 
     return outcome
 
