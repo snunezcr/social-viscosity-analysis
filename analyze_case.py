@@ -46,7 +46,7 @@ def get_run_data(filename:str, m: int):
     return outcome
 
 
-def compute_stored_runs(directory:str, m: int, output:str):
+def compute_stored_runs(directory:str, m: int, output):
     rows = []
 
     filenames = glob.glob(directory + "/run*.csv")
@@ -91,7 +91,7 @@ def process_case(directory: str, m: int, output: str):
         mvm, mvs,
         km, ks,
         nm, ns,
-        rm ,rs
+        rm, rs
     ])
 
 
