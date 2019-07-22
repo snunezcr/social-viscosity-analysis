@@ -1,7 +1,6 @@
 # Juan Salamanca and Santiago Nunez-Corrales
 # Social viscosity
 from statsmodels.stats.multicomp import MultiComparison
-from statsmodels.multivariate.manova import MANOVA
 from statsmodels.formula.api import ols
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
@@ -12,19 +11,22 @@ import sys
 
 
 def run_all(topdir: str, m: int, prfx: str):
+    neighbors = ["5", "10", "15", "20"]
     tolerances = ['0.0', '0.2', '0.4', '0.6', '0.8', '1.0']
     names = ['IVM', 'IVS', 'FVM', 'FVS', 'MaxVM', 'MaxVS', 'MinVM', 'MinVS',
              'KM', 'KS', 'NM', 'NS', 'RM', 'RS']
     rows = []
 
-    for tol in tolerances:
-        casedir = topdir + '/' + 'all' + '_' + tol
-        casesum = ac.process_case(casedir, m, prfx + '_' + tol)
-        rows.append(casesum)
+    for n in neighbors:
+        for tol in tolerances:
+            casedir = topdir + '/' + 'nn' + '_' + tol + '_' + n
+            casesum = ac.process_case(casedir, m, prfx + '_' + n + '_' + tol)
+            rows.append(casesum)
 
     df = pd.DataFrame(rows, columns=names)
-    df['TOL'] = tolerances
 
+    #df['TOL'] = tolerances * 4
+    #df['NNN'] = ['5']*4 + ['10']*4 + ['15']*4 + ['20']*4
     return df
 
 
@@ -70,6 +72,7 @@ def plot_reversions(df: pd.DataFrame):
 
 def compute_anova_rev(topdir: str, m: int):
     # Assemble a large experiment table with all data
+    neighbors = ["5", "10", "15", "20"]
     tolerances = ['0.0', '0.2', '0.4', '0.6', '0.8', '1.0']
     dfs = []
 
@@ -93,35 +96,9 @@ def compute_anova_rev(topdir: str, m: int):
     print(mc_results)
 
 
-def compute_manova_cvg(topdir: str, m: int):
-    # Assemble a large experiment table with all data
-    tolerances = ['0.0', '0.2', '0.4', '0.6', '0.8', '1.0']
-    dfs = []
-
-    for tol in tolerances:
-        casedir = topdir + '/' + 'all' + '_' + tol
-        casetable = ac.compute_stored_runs(casedir, m, None)
-        casetable['TOL'] = [float(tol)] * 5
-        dfs.append(casetable)
-
-    df = pd.concat(dfs).reset_index(drop=True)
-    df.to_csv('all_to_manova.csv')
-
-    # Perform a regression with the data
-    endog = np.asarray(df[['K', 'N']])
-    exog = np.asarray(df[['TOL']])
-
-    mod = MANOVA.from_formula('K + N ~ TOL', data=df)
-    print(mod)
-    result = mod.mv_test()
-    print(result)
-    return mod
-
-
 def main(directory: str, m: int, output: str):
     # Compute anova
     compute_anova_rev(directory, m)
-    compute_manova_cvg(directory, m)
 
     # Obtain the descriptive dataset
     df = run_all(directory, m, output)
