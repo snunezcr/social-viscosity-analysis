@@ -315,6 +315,8 @@ def main(directory: str, m: int, output: str):
     compute_anova_rev_no_inter(directory, m)
     compute_anova_rev_restrict_n(directory, m)
     compute_anova_rev_restrict_t(directory, m)
+    compute_manova_cvg(directory, m)
+
 
     # Obtain the descriptive dataset
     df = run_all(directory, m, output)
