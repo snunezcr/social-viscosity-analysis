@@ -1,6 +1,7 @@
 # Juan Salamanca and Santiago Nunez-Corrales
 # Social viscosity
 from statsmodels.stats.multicomp import MultiComparison
+from statsmodels.multivariate.manova import MANOVA
 from matplotlib.font_manager import FontProperties
 from statsmodels.formula.api import ols
 import matplotlib.pyplot as plt
@@ -323,6 +324,33 @@ def main(directory: str, m: int, output: str):
     plot_Mvm_mvm(df)
     plot_func(df, m)
     plot_reversions(df)
+
+
+def compute_manova_cvg(topdir: str, m: int):
+    # Assemble a large experiment table with all data
+    neighbors = ["5", "10", "15", "20"]
+    tolerances = ['0.0', '0.2', '0.4', '0.6', '0.8', '1.0']
+    dfs = []
+
+    for n in neighbors:
+        for tol in tolerances:
+            casedir = topdir + '/' + 'nn' + '_' + tol + '_' + n
+            casetable = ac.compute_stored_runs(casedir, m, None)
+            casetable['TOL'] = [float(tol)] * 5
+            casetable['NNN'] = [float(n)] * 5
+            dfs.append(casetable)
+
+    df = pd.concat(dfs).reset_index(drop=True)
+
+    # Perform a regression with the data
+    endog = np.asarray(df[['K', 'N']])
+    exog = np.asarray(df[['TOL', 'NNN']])
+
+    mod = MANOVA.from_formula('K + N ~ TOL + NNN + NNN:TOL', data=df)
+    print(mod)
+    result = mod.mv_test()
+    print(result)
+    return mod
 
 
 if __name__ == "__main__":
