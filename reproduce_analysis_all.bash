@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Juan Salamanca and Santiago Nunez-Corrales
 # Social viscosity
 
