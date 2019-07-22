@@ -60,9 +60,9 @@ def plot_func(df: pd.DataFrame, m: int):
 
 def plot_reversions(df: pd.DataFrame):
     plt.errorbar(df['TOL'], df['RM'], yerr=df['RS'] / 6, fmt='-',
-                 color='blue', ecolor='blue', elinewidth=1, capsize=1, label='Initial')
+                 color='blue', ecolor='blue', elinewidth=1, capsize=1, label='All-to-all')
     plt.xlabel('Tolerance')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('Reversions')
     plt.legend(loc='upper right')
     plt.savefig('all_revs.eps', format='eps', dpi=300)
     plt.show()

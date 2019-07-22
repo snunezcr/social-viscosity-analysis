@@ -82,7 +82,18 @@ def process_case(directory: str, m: int, output: str):
     rm = runs['REV'].mean()
     rs = runs['REV'].std()
 
-    print(f'Iv: {ivm:.2f} ({ivs:.2f})\nFv: {fvm:.2f} ({fvs:.2f})\nMv: {Mvm:.2f} ({Mvs:.2f})\nmv: {mvm:.2f} ({mvs:.2f})\nk: {km:.2E} ({ks:.2E})\nn: {nm:.2f} ({ns:.2f})\nR: {rm:.2f} ({rs:.2f})')
+    kmfp = f'{km:.2E}'.split('E-')
+    ksfp = f'{km:.2E}'.split('E-')
+    print(kmfp)
+    kmman = float(kmfp[0])
+    kmexp = int(kmfp[1])
+    ksman = float(kmfp[0])
+    ksexp = int(kmfp[1])
+
+    print(f'Iv: {ivm:.2f} ({ivs:.2f})\nFv: {fvm:.2f} ({fvs:.2f})\nMv: {Mvm:.2f} ({Mvs:.2f})\nmv: {mvm:.2f} ({mvs:.2f})\nk: {km:.2E} ({ks:.2E})\nn: {nm:.2f} ({ns:.2f})\nR: {rm:.2f} ({rs:.2f})\n\n')
+    # To LaTeX
+    print(
+        f' {ivm:.2f} ({ivs:.2f}) & {fvm:.2f} ({fvs:.2f}) & {Mvm:.2f} ({Mvs:.2f}) & {mvm:.2f} ({mvs:.2f}) & ${kmman:.2f}\\times10^{{-{kmexp}}}$ (${ksman:.2f}\\times10^{{-{ksexp}}}$) & {nm:.2f} ({ns:.2f}) & {rm:.2f} ({rs:.2f}) \\\\')
 
     return np.array([
         ivm, ivs,
