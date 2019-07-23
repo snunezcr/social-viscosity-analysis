@@ -34,7 +34,7 @@ def plot_ivm_fvm(df: pd.DataFrame):
     plt.errorbar(df['TOL'], df['MinVM'], yerr=df['MinVS']/6, fmt='-',
                  color='red', ecolor='red', elinewidth=1, capsize=1, label='Final')
     plt.xlabel('Tolerance')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('GIV')
     plt.legend(loc='center right')
     plt.savefig('all_ivm_fvm.eps', format='eps', dpi=300)
     plt.show()
@@ -52,7 +52,7 @@ def plot_func(df: pd.DataFrame, m: int):
         plt.plot(times, curve, label=f"Tol: {tolerances[index]} (k={row['KM']:.2E}, n={row['NM']:.2f})", color=cols[index])
 
     plt.xlabel('Discrete time')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('GIV')
     plt.legend(loc='upper right')
     plt.savefig('all_functions.eps', format='eps', dpi=300)
     plt.show()

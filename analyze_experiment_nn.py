@@ -59,7 +59,7 @@ def plot_ivm_fvm(df: pd.DataFrame):
                  capsize=1, label='Final [NNN = 20]')
 
     plt.xlabel('Tolerance')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('GIV')
     #plt.legend(loc='center right', prop=fontP)
     plt.savefig('nnn_ivm_fvm.eps', format='eps', dpi=300)
     plt.show()
@@ -94,7 +94,7 @@ def plot_Mvm_mvm(df: pd.DataFrame):
                  capsize=1, label='Minimum [NNN = 20]')
 
     plt.xlabel('Tolerance')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('GIV')
     #plt.legend(loc='center right', prop=fontP)
     plt.savefig('nnn_Mvm_mvm.eps', format='eps', dpi=300)
     plt.show()
@@ -120,7 +120,7 @@ def plot_func(df: pd.DataFrame, m: int):
         plt.plot(times, curve, label=f"Tol: {tolerances[index%6]} (k={row['KM']:.2E}, n={row['NM']:.2f})", color=cols[index%6])
 
     plt.xlabel('Discrete time')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('GIV')
     plt.legend(loc='upper right')
     plt.savefig('nnn_functions_5.eps', format='eps', dpi=300)
     plt.show()
@@ -130,7 +130,7 @@ def plot_func(df: pd.DataFrame, m: int):
         plt.plot(times, curve, label=f"Tol: {tolerances[index%6]} (k={row['KM']:.2E}, n={row['NM']:.2f})", color=cols[index%6])
 
     plt.xlabel('Discrete time')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('GIV')
     plt.legend(loc='upper right')
     plt.savefig('nnn_functions_10.eps', format='eps', dpi=300)
     plt.show()
@@ -142,7 +142,7 @@ def plot_func(df: pd.DataFrame, m: int):
         plt.plot(times, curve, label=f"Tol: {tolerances[index%6]} (k={row['KM']:.2E}, n={row['NM']:.2f})", color=cols[index%6])
 
     plt.xlabel('Discrete time')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('GIV')
     plt.legend(loc='upper right')
     plt.savefig('nnn_functions_15.eps', format='eps', dpi=300)
     plt.show()
@@ -152,7 +152,7 @@ def plot_func(df: pd.DataFrame, m: int):
         plt.plot(times, curve, label=f"Tol: {tolerances[index%6]} (k={row['KM']:.2E}, n={row['NM']:.2f})", color=cols[index%6])
 
     plt.xlabel('Discrete time')
-    plt.ylabel('Global viscosity')
+    plt.ylabel('GIV')
     plt.legend(loc='upper right')
     plt.savefig('nnn_functions_20.eps', format='eps', dpi=300)
     plt.show()
